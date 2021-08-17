@@ -3,30 +3,33 @@ require('dotenv').config({ path: 'config/.env' });
 
 // Include Express Dependency
 const express = require('express');
-const { write } = require('fs');
 //Include Mongoose Dependency
 const mongoose = require('mongoose');
+//Include Express-Sessions Dependency
+const session = require('express-session');
+//Include connect-mongo dependency
+const MongoStore = require('connect-mongo');
+
 //Initialize App
 const app = express();
 
-//Connect to Mongoose Database
-const connection = mongoose.createConnection(process.env.DATABASE_URL,  {useNewUrlParser: true, useUnifiedTopology: true });
-
+// Session Store for a place to store session info
+const sessionStore = MongoStore.create({mongoUrl: process.env.DATABASE_URL})
 
 //Connection variable
-connection.on('error', (error) => console.log(error));
-connection.once('open', () => console.log("Database Connected."));
+// connection.on('error', (error) => console.log(error));
+// connection.once('open', () => console.log("Database Connected."));
 
-// Write to database
-async function writeToDatabase() {
-    const doc = { name: "Neapolitan pizza", shape: "round" };
-    const result = await connection.collection("newCollection").insertOne(doc);
-    console.log(
-        `A document was inserted with the _id: ${result.insertedId}`,
-    );
-}
-
-writeToDatabase();
+//Use a session (tied to MongoDB and cookies)
+app.use(session({
+    secret: 'secret key', /* Oftentimes some variable in .env, kept to check validity */
+    resave: false,
+    saveUninitialized: true,
+    store: sessionStore,
+    cookie: { /* Will delete eventually */
+        maxAge: 1000 * 60 * 24 * 24 //One day
+    }
+}));
 
 //Serve Static HTML pages
 app.use(express.static('public'));
