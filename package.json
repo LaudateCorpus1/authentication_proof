@@ -1,0 +1,14 @@
+{
+  "name": "authentication_proof",
+  "version": "1.0.0",
+  "description": "Steps to take for simple web app authentication (with Google):",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pirjot",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
