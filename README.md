@@ -4,3 +4,5 @@ Steps to take for simple web app authentication (with PassportJS):
 2. Install Express, Nodemon, MongoDB
 3. Install Sessions (npm install express-sessions)
 4. Install Connect-Mongo
+5. Implement Passport + Routes
+6. Begin Google Implementation
