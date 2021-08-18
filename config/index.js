@@ -31,6 +31,8 @@ app.use(session({
     }
 }));
 
+
+
 //Serve Static HTML pages
 app.use(express.static('public'));
 
